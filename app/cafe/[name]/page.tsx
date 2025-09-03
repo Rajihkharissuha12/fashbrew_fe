@@ -82,7 +82,7 @@ export default function CafeDetail({
     time_operational: "10:00 - 23:00 WIB",
     url_img_hero:
       // "https://res.cloudinary.com/dvuza2lpc/image/upload/v1751112911/fashbrew/IMG_6780_c1sxoe.jpg",
-      "https://res.cloudinary.com/dvuza2lpc/image/upload/v1751112911/fashbrew/IMG_6780_c1sxoe.jpg",
+      "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751112911/fashbrew/IMG_6780_c1sxoe.jpg",
 
     url_img_parking:
       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",

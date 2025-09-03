@@ -17,21 +17,21 @@ interface HeroSectionProps {
 
 // Sample menu images - ganti dengan URL gambar menu kamu yang sebenarnya
 const menuImages = [
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134406/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.09.46_tm2ili.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134404/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.11_btlkwx.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134399/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.19_zikaop.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134406/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.28_mwuhuh.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134410/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.38_etjsnl.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134417/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.47_ndmbto.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134419/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.55_y2rndo.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134410/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.02_kdj5gi.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134416/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.10_tbvjlw.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134424/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.18_ajinjd.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134422/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.26_gsu8ga.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134423/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.37_q1hgb2.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134398/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.46_hdnsbx.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134403/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.54_uhqufa.png",
-  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_1000/v1751134403/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.12.02_cyjznr.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134406/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.09.46_tm2ili.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134404/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.11_btlkwx.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134399/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.19_zikaop.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134406/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.28_mwuhuh.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134410/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.38_etjsnl.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134417/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.47_ndmbto.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134419/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.10.55_y2rndo.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134410/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.02_kdj5gi.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134416/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.10_tbvjlw.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134424/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.18_ajinjd.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134422/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.26_gsu8ga.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134423/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.37_q1hgb2.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134398/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.46_hdnsbx.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134403/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.11.54_uhqufa.png",
+  "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751134403/fashbrew/Menu%20Kattapa/Tangkapan_Layar_2025-06-29_pukul_01.12.02_cyjznr.png",
 ];
 
 const HeroSection = ({

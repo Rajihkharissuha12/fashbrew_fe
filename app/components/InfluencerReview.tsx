@@ -30,10 +30,10 @@ const InfluencerReview = ({ url_review }: ReviewSection) => {
       quote:
         "Kattapa tuh tempatnya nyaman banget, bikin betah berlama-lama. Cocok buat nugas, kerja, atau sekadar healing. Plus, stafnya super ramah dan helpful!",
       avatar:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1750752061/fashbrew/caption_in_this_song_tsletd.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1750752061/fashbrew/caption_in_this_song_tsletd.jpg",
       isSpecialCollaboration: false,
       videoThumbnail:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751569044/fashbrew/unnamed_wbpmbk.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751569044/fashbrew/unnamed_wbpmbk.jpg",
       instagramUrl:
         "https://www.instagram.com/reel/DMzZ_N9utlX/?utm_source=ig_web_copy_link",
       hasEmbeddableVideo: false,

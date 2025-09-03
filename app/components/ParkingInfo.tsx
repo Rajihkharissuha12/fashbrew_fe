@@ -43,17 +43,17 @@ const ParkingInfo = () => {
 
   const images = [
     {
-      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751521121/fashbrew/IMG_6835_bccc9u.jpg",
+      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751521121/fashbrew/IMG_6835_bccc9u.jpg",
       title: "Area Parkir Motor",
       location: "Area Parkir Motor",
     },
     {
-      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751521122/fashbrew/IMG_6838_ic5rtt.jpg",
+      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751521122/fashbrew/IMG_6838_ic5rtt.jpg",
       title: "Area Parkir Mobil",
       location: "Area Parkir Mobil",
     },
     {
-      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751521119/fashbrew/IMG_6839_l4lhlw.jpg",
+      url: "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751521119/fashbrew/IMG_6839_l4lhlw.jpg",
       title: "Area Parkir Mobil",
       location: "Area Parkir Mobil",
     },

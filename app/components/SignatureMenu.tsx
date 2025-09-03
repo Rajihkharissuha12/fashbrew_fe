@@ -18,7 +18,7 @@ const SignatureMenu = () => {
       name: "Frappe Matcha Caramel",
       price: "Rp 29.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/v1753934930/fashbrew/IMG_9277_xxci6g.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1753934930/fashbrew/IMG_9277_xxci6g.jpg",
       description:
         "Perpaduan sempurna antara matcha premium dan sentuhan caramel manis, disajikan dalam frappe dingin yang menyegarkan dan creamy.",
       isSignature: true,
@@ -31,7 +31,7 @@ const SignatureMenu = () => {
       name: "Cromboloni Coklat",
       price: "Rp 25.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524084/fashbrew/Tezza-1713_rh9emr.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524084/fashbrew/Tezza-1713_rh9emr.jpg",
       description:
         "Cromboloni lembut dengan isian coklat meleleh yang lumer di mulut",
       isSignature: true,
@@ -43,7 +43,7 @@ const SignatureMenu = () => {
       name: "Lychee Tea Ice",
       price: "Rp 22.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524105/fashbrew/Tezza-6782_ejuwjm.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524105/fashbrew/Tezza-6782_ejuwjm.jpg",
       description: "Minuman segar perpaduan teh dan leci yang manis alami",
       isSignature: false,
       rating: 4.8,
@@ -55,7 +55,7 @@ const SignatureMenu = () => {
       name: "Chiken Honey Lemon",
       price: "Rp 25.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524106/fashbrew/Tezza-5145_mavpls.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524106/fashbrew/Tezza-5145_mavpls.jpg",
       description:
         "Daging ayam empuk dengan saus madu lemon yang gurih dan manis segar",
       isSignature: false,
@@ -68,7 +68,7 @@ const SignatureMenu = () => {
       name: "Katta Plater",
       price: "Rp 28.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524108/fashbrew/Tezza-9817_pyljkd.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524108/fashbrew/Tezza-9817_pyljkd.jpg",
       description:
         "Paket cemilan gurih berisi kentang goreng, nugget, dan sosis lengkap dengan saus spesial",
       isSignature: false,
@@ -81,7 +81,7 @@ const SignatureMenu = () => {
       name: "Thai Tea Ice",
       price: "Rp 18.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524107/fashbrew/Tezza-0933_gof9na.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524107/fashbrew/Tezza-0933_gof9na.jpg",
       description:
         "Thai tea otentik dengan rasa creamy dan aroma khas teh Thailand",
       isSignature: true,
@@ -94,7 +94,7 @@ const SignatureMenu = () => {
       name: "Ice Tea",
       price: "Rp 18.000",
       image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751524111/fashbrew/Tezza-2975_h7vnyv.jpg",
+        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1751524111/fashbrew/Tezza-2975_h7vnyv.jpg",
       description:
         "Teh dingin klasik dengan kesegaran maksimal untuk hari panas",
       isSignature: false,

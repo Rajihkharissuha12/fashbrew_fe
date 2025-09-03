@@ -24,7 +24,7 @@ const newMenuItems: MenuItem[] = [
     description: "Espresso dengan susu creamy dan brown sugar syrup",
     price: "55K",
     image:
-      "https://res.cloudinary.com/dvuza2lpc/image/upload/v1753946733/fashbrew/IMG_9317_1_j9qpgd.jpg",
+      "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto:good,dpr_auto/v1753946733/fashbrew/IMG_9317_1_j9qpgd.jpg",
     isNew: true,
     category: "Coffee",
   },
