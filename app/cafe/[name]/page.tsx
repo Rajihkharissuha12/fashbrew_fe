@@ -1,15 +1,15 @@
 "use client";
 // app/cafe/[id]/page.tsx
-import AffiliateProducts from "@/app/components/AffiliateProducts";
-import CafeHighlights from "@/app/components/CafeHighlights";
-import Footer from "@/app/components/Footer";
-import HeroSection from "@/app/components/HeroSection";
-import InfluencerReview from "@/app/components/InfluencerReview";
-import InstagramGallery from "@/app/components/InstagramGallery";
-import LocationSection from "@/app/components/LocationSection";
-import ParkingInfo from "@/app/components/ParkingInfo";
-import SEOContent from "@/app/components/SEOContent";
-import SignatureMenu from "@/app/components/SignatureMenu";
+import AffiliateProducts from "@/app/[username]/components/AffiliateProducts";
+import CafeHighlights from "@/app/[username]/components/CafeHighlights";
+import Footer from "@/app/[username]/components/Footer";
+import HeroSection from "@/app/[username]/components/HeroSection";
+import InfluencerReview from "@/app/[username]/components/InfluencerReview";
+import InstagramGallery from "@/app/[username]/components/InstagramGallery";
+import LocationSection from "@/app/[username]/components/LocationSection";
+import ParkingInfo from "@/app/[username]/components/ParkingInfo";
+import SEOContent from "@/app/[username]/components/SEOContent";
+import SignatureMenu from "@/app/[username]/components/SignatureMenu";
 import { notFound, useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 

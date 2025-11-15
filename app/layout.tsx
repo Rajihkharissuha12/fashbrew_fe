@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./[username]/components/Navbar";
 import { ScrollRestoration } from "next-scroll-restoration";
-import StructuredData from "./components/StructuredData";
+import StructuredData from "./[username]/components/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -70,25 +70,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="id">
       <head>
-        <StructuredData type="website" data={websiteData} />
-        <StructuredData type="organization" data={organizationData} />
-        <link
-          rel="icon"
-          href="https://res.cloudinary.com/dvuza2lpc/image/upload/v1751993789/fashbrew/dreamina-2025-07-08-8782-buatkan_logo_brand_dengan_ketentuan_mini..._q2oyje.png"
+        <StructuredData
+          type="website"
+          data={{ name: "FashBrew", url: "https://fashbrew.com" }}
         />
+        <StructuredData
+          type="organization"
+          data={{ name: "FashBrew", url: "https://fashbrew.com" }}
+        />
+        <link rel="icon" href="https://res.cloudinary.com/.../favicon.png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
         {children}
-        <ScrollRestoration />
       </body>
     </html>
   );
