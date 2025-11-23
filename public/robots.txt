@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Allow: /cafe
+Allow: /rereamalia/portofolio
+Disallow: /dashboard
+Disallow: /auth
+Disallow: /login
+Disallow: /onboarding
+
+Sitemap: https://fashbreew.com/sitemap.xml

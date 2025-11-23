@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import { ScrollRestoration } from "next-scroll-restoration";
-import StructuredData from "./components/StructuredData";
+import StructuredData from "./[username]/components/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,43 +13,37 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const websiteData = {
-  name: "FashBrew",
-  url: "https://fashbrew.com",
-  description:
-    "Jelajahi kafe-kafe aesthetic di Jember dengan FashBrew. Temukan spot foto instagramable, menu signature, dan rekomendasi outfit untuk OOTD kamu.",
-};
-
-const organizationData = {
-  name: "FashBrew",
-  url: "https://fashbrew.com",
-  logo: "https://fashbrew.com/logo.png",
-  socialLinks: [
-    "https://instagram.com/fashbrew",
-    "https://twitter.com/fashbrew",
-  ],
-};
-
 export const metadata: Metadata = {
-  title: "FashBrew - Temukan Kafe Aesthetic di Jember",
-
+  metadataBase: new URL("https://fashbreew.com"),
+  title: {
+    default: "FashBrew - Platform Catalog OOTD & Product Affiliate Influencer",
+    template: "%s | FashBrew",
+  },
   description:
-    "Jelajahi kafe-kafe aesthetic di Jember dengan FashBrew. Temukan spot foto instagramable, menu signature, dan rekomendasi outfit untuk OOTD kamu.",
-  keywords:
-    "kafe jember, coffee shop jember, tempat nongkrong jember, kafe aesthetic, spot foto instagramable, rekomendasi kafe",
+    "Platform catalog OOTD dan product affiliate untuk fashion influencer Indonesia. Temukan inspirasi outfit, lookbook, dan produk fashion pilihan dari influencer terpercaya.",
+  keywords: [
+    "catalog OOTD",
+    "fashion influencer platform",
+    "product affiliate",
+    "influencer catalog",
+    "fashion lookbook",
+    "OOTD inspiration",
+    "fashion products",
+    "influencer shop",
+  ],
   authors: [{ name: "FashBrew Team" }],
   openGraph: {
-    title: "FashBrew - Temukan Kafe Aesthetic di Jember",
+    title: "FashBrew - Platform Catalog OOTD & Product Affiliate Influencer",
     description:
-      "Jelajahi kafe-kafe aesthetic di Jember dengan FashBrew. Temukan spot foto instagramable, menu signature, dan rekomendasi outfit untuk OOTD kamu.",
-    url: "https://fashbrew.com",
+      "Platform catalog OOTD dan product affiliate untuk fashion influencer. Temukan inspirasi outfit dan produk fashion pilihan.",
+    url: "https://fashbreew.com",
     siteName: "FashBrew",
     images: [
       {
         url: "https://res.cloudinary.com/dvuza2lpc/image/upload/v1751275238/fashbrew/Tangkapan_Layar_2025-06-30_pukul_16.20.13_bkunod.png",
-        width: 800,
-        height: 600,
-        alt: "FashBrew - Kafe Aesthetic di Jember",
+        width: 1200,
+        height: 630,
+        alt: "FashBrew - Platform Catalog Influencer",
       },
     ],
     locale: "id_ID",
@@ -59,36 +51,58 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FashBrew - Temukan Kafe Aesthetic di Jember",
+    title: "FashBrew - Platform Catalog OOTD & Product Affiliate",
     description:
-      "Jelajahi kafe-kafe aesthetic di Jember dengan FashBrew. Temukan spot foto instagramable, menu signature, dan rekomendasi outfit untuk OOTD kamu.",
+      "Platform catalog OOTD dan product affiliate untuk fashion influencer Indonesia.",
     images: [
       "https://res.cloudinary.com/dvuza2lpc/image/upload/v1751275238/fashbrew/Tangkapan_Layar_2025-06-30_pukul_16.20.13_bkunod.png",
     ],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="id">
       <head>
-        <StructuredData type="website" data={websiteData} />
-        <StructuredData type="organization" data={organizationData} />
+        <StructuredData
+          type="website"
+          data={{
+            name: "FashBrew",
+            url: "https://fashbreew.com",
+            description:
+              "Platform catalog OOTD dan product affiliate untuk fashion influencer",
+          }}
+        />
+        <StructuredData
+          type="organization"
+          data={{
+            name: "FashBrew",
+            url: "https://fashbreew.com",
+            logo: "https://fashbreew.com/logo.png",
+            socialLinks: [
+              "https://instagram.com/fashbrew",
+              "https://twitter.com/fashbrew",
+            ],
+          }}
+        />
         <link
           rel="icon"
-          href="https://res.cloudinary.com/dvuza2lpc/image/upload/v1751993789/fashbrew/dreamina-2025-07-08-8782-buatkan_logo_brand_dengan_ketentuan_mini..._q2oyje.png"
+          href="https://res.cloudinary.com/dvuza2lpc/image/upload/fashbrew/favicon.png"
         />
+        <link rel="canonical" href="https://fashbreew.com" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
         {children}
-        <ScrollRestoration />
       </body>
     </html>
   );
