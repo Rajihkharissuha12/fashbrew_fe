@@ -248,7 +248,7 @@ export default function LookbookPage() {
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:4000/api/ootds/${username}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/ootds/${username}`
         );
 
         console.log("Response Status:", response.status);
@@ -266,7 +266,7 @@ export default function LookbookPage() {
         setOotdData(transformedData);
 
         const responseUser = await fetch(
-          `http://localhost:4000/api/users/username/${username}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/users/username/${username}`
         );
 
         if (!responseUser.ok) {

@@ -190,7 +190,7 @@ async function deleteOotd(apiBase: string, id: string | number) {
 
 export default function DashboardOotdClient({
   userId,
-  apiBaseUrl = "http://localhost:4000",
+  apiBaseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
   initialItems = [],
   initialMeta = { total: 0, page: 1, pageSize: 10 },
   initialQuery = "",

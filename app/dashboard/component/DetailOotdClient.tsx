@@ -249,7 +249,7 @@ async function deleteOotd(apiBase: string, id: string) {
 
 export default function OotdDetailClient({
   ootdId,
-  apiBaseUrl = "http://localhost:4000",
+  apiBaseUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}`,
 }: {
   ootdId: string;
   apiBaseUrl?: string;

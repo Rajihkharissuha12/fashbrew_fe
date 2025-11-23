@@ -98,7 +98,7 @@ export default function ShopPageClient() {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:4000/api/products/username/${username}`,
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products/username/${username}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },

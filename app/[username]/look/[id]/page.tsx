@@ -310,7 +310,7 @@ export default function OotdDetail({
       try {
         setLoading(true);
         const response = await fetch(
-          `http://localhost:4000/api/ootds/byid/${id}`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/ootds/byid/${id}`
         );
 
         if (!response.ok) {

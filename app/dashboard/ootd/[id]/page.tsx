@@ -9,5 +9,10 @@ export default async function OotdDetailPage({
   // Await params sebelum menggunakan
   const { id } = await params;
 
-  return <OotdDetailClient ootdId={id} apiBaseUrl="http://localhost:4000" />;
+  return (
+    <OotdDetailClient
+      ootdId={id}
+      apiBaseUrl={process.env.NEXT_PUBLIC_API_BASE_URL}
+    />
+  );
 }
