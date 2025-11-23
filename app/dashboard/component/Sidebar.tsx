@@ -38,6 +38,12 @@ const navItems: NavItem[] = [
     icon: ShoppingBag,
     match: "startsWith",
   },
+  {
+    href: "/dashboard/profile",
+    label: "Profile",
+    icon: User, // Ikon User dari lucide-react
+    match: "startsWith",
+  },
 ];
 
 export default function SidebarNav({ open, setOpen }: SidebarNavProps) {
