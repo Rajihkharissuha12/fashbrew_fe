@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const supabase = await createSupabaseServer();
 
   if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(req.url);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (error)
       return NextResponse.redirect(new URL("/login?error=oauth", req.url));
   } else {
