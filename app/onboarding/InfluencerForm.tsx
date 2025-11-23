@@ -330,7 +330,7 @@ export default function InfluencerForm({ userId }: Props) {
               {/* Handle Input */}
               <Input
                 label="Handle/Username"
-                placeholder="Contoh: rajih_ootd atau aisolusimuda"
+                placeholder="Contoh: advance_ootd atau niko"
                 value={handle}
                 onChange={(e) => handleChange("handle", e.target.value)}
                 onBlur={() => handleBlur("handle")}

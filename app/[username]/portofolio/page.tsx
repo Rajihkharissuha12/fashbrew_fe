@@ -37,6 +37,11 @@ import {
   Target,
 } from "lucide-react";
 import CoffeeFooter from "../../footer/page";
+import type { Metadata } from "next";
+
+type Props = {
+  params: { username: string };
+};
 
 // ========================= Shared Types =========================
 interface ApiPlatform {

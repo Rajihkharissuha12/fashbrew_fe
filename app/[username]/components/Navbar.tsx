@@ -52,7 +52,7 @@ export default function Navbar({ username }: { username: string }) {
             >
               Shop
             </Link>
-            {username === "aisolusimuda" && (
+            {username === "rereamalia" && (
               <>
                 <Link
                   href={`/${username}`}
@@ -119,7 +119,7 @@ export default function Navbar({ username }: { username: string }) {
                 >
                   Shop
                 </Link>
-                {username === "aisolusimuda" && (
+                {username === "rereamalia" && (
                   <>
                     <Link
                       href={`/${username}`}
@@ -129,7 +129,7 @@ export default function Navbar({ username }: { username: string }) {
                     </Link>
                   </>
                 )}
-                {username === "aisolusimuda" && (
+                {username === "rereamalia" && (
                   <>
                     <Link
                       href={`/${username}/portofolio`}

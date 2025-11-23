@@ -104,7 +104,7 @@ async function fetchOotdsServer(
 export default async function DashboardOotd({
   searchParams,
 }: {
-  searchParams: { page?: string; pageSize?: string; q?: string };
+  searchParams: Promise<{ page?: string; pageSize?: string; q?: string }>;
 }) {
   const supabase = await createSupabaseServer();
   const {
@@ -117,12 +117,10 @@ export default async function DashboardOotd({
     redirect("/onboarding");
   }
 
-  const page = Math.max(Number(searchParams.page || 1), 1);
-  const pageSize = Math.min(
-    Math.max(Number(searchParams.pageSize || 10), 1),
-    100
-  );
-  const q = searchParams.q?.trim() || undefined;
+  const params = await searchParams;
+  const page = Math.max(Number(params.page || 1), 1);
+  const pageSize = Math.min(Math.max(Number(params.pageSize || 10), 1), 100);
+  const q = params.q?.trim() || undefined;
 
   const { items, meta } = await fetchOotdsServer(influencerId, {
     page,
@@ -134,7 +132,6 @@ export default async function DashboardOotd({
     <DashboardOotdClient
       userId={user.id}
       apiBaseUrl={API_BASE}
-      // tambahkan props ini bila DashboardOotdClient dimodifikasi menerima initial data
       initialItems={items}
       initialMeta={meta}
       initialQuery={q || ""}
