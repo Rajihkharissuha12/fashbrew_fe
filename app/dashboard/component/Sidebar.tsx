@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import {
   LogOut,
@@ -41,16 +40,13 @@ const navItems: NavItem[] = [
   {
     href: "/dashboard/profile",
     label: "Profile",
-    icon: User, // Ikon User dari lucide-react
+    icon: User,
     match: "startsWith",
   },
 ];
 
 export default function SidebarNav({ open, setOpen }: SidebarNavProps) {
   const pathname = usePathname();
-  const router = useRouter();
-
-  useEffect(() => setOpen(false), [pathname, setOpen]);
 
   const isActive = (item: NavItem) =>
     item.match === "exact"
@@ -60,7 +56,7 @@ export default function SidebarNav({ open, setOpen }: SidebarNavProps) {
   const SidebarContent = (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className="h-14 flex items-center px-4 border-b font-semibold">
+      <div className="h-14 flex items-center px-4 border-b dark:border-zinc-800 font-semibold">
         Admin
       </div>
 
@@ -73,6 +69,8 @@ export default function SidebarNav({ open, setOpen }: SidebarNavProps) {
             <Link
               key={item.href}
               href={item.href}
+              // prefetch={true} // CRITICAL: Prefetch untuk instant navigation
+              onClick={() => setOpen(false)} // Close sidebar instantly
               aria-current={active ? "page" : undefined}
               className={clsx(
                 "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
@@ -104,7 +102,7 @@ export default function SidebarNav({ open, setOpen }: SidebarNavProps) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 h-screen border-r bg-white dark:bg-zinc-950 dark:border-zinc-800 fixed left-0 top-0">
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 h-screen border-r bg-white dark:bg-zinc-950 dark:border-zinc-800 fixed left-0 top-0 z-40">
         {SidebarContent}
       </aside>
 

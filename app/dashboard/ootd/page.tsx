@@ -38,7 +38,10 @@ async function fetchOotdsServer(
   qs.set("pageSize", String(opts.pageSize));
 
   const res = await fetch(`${API_BASE}/api/ootds?${qs.toString()}`, {
-    cache: "no-store",
+    next: {
+      revalidate: 10, // Cache 10 detik
+      tags: [`ootds-${influencerId}`],
+    },
   });
   if (!res.ok) {
     return {
@@ -112,15 +115,24 @@ export default async function DashboardOotd({
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const influencerId = await getInfluencerIdByAuthUserId(user.id);
-  if (!influencerId) {
-    redirect("/onboarding");
-  }
+  // const influencerId = await getInfluencerIdByAuthUserId(user.id);
+  // if (!influencerId) {
+  //   redirect("/onboarding");
+  // }
 
   const params = await searchParams;
   const page = Math.max(Number(params.page || 1), 1);
   const pageSize = Math.min(Math.max(Number(params.pageSize || 10), 1), 100);
   const q = params.q?.trim() || undefined;
+
+  // ✅ PARALLEL FETCH - Lebih cepat
+  const [influencerId] = await Promise.all([
+    getInfluencerIdByAuthUserId(user.id),
+  ]);
+
+  if (!influencerId) {
+    redirect("/onboarding");
+  }
 
   const { items, meta } = await fetchOotdsServer(influencerId, {
     page,

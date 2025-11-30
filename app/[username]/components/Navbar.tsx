@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Navbar({ username }: { username: string }) {
-  console.log("NAVBAR", username);
   const pathname = usePathname();
   const hideOn = new Set(["/login"]);
   if (hideOn.has(pathname)) return null;

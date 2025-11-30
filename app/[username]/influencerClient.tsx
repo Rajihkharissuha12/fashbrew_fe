@@ -334,8 +334,6 @@ export default function InfluencerClient() {
             </div>
 
             {/* Footer */}
-
-            <CoffeeFooter />
           </>
         )}
         <p className="text-center text-gray-600 mt-8">

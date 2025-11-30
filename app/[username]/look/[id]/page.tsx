@@ -394,7 +394,7 @@ export default function OotdDetail({
         </button>
       </div>
 
-      <main className="container max-w-7xl mx-auto px-4 pb-8 mb-12">
+      <main className="container max-w-7xl mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             {/* Image Carousel */}

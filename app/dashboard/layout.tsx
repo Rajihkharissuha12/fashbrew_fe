@@ -2,7 +2,8 @@ import { useState } from "react";
 import { createSupabaseServer } from "../utils/supabase/server";
 import SidebarNav from "./component/Sidebar";
 import { Menu, X } from "lucide-react";
-import DashboardClient from "./component/DashboardClient";
+import NavigationProgress from "./component/NavigationProgress";
+import DashboardShell from "./component/DashboardClient";
 
 export const revalidate = 3600; // Cache 1 jam
 
@@ -17,5 +18,10 @@ export default async function DashboardLayout({
   } = await (await supabase).auth.getUser();
   if (!user) return null;
 
-  return <DashboardClient>{children}</DashboardClient>;
+  return (
+    <>
+      <NavigationProgress />
+      <DashboardShell>{children}</DashboardShell>
+    </>
+  );
 }
