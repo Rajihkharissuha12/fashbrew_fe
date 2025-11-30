@@ -1592,9 +1592,6 @@ export default function RereAmaliaLanding() {
         </div>
       </section>
 
-      {/* Footer */}
-      <CoffeeFooter />
-
       {/* Optional Modal untuk katalog produk dari API (jika ingin ditampilkan) */}
       {showModal && selectedProduct && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm overscroll-contain flex items-center justify-center z-50 p-3 sm:p-4">

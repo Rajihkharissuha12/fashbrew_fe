@@ -117,12 +117,12 @@ const ProductModal = ({ product, onClose }: Props) => {
 
         {/* Scrollable Content */}
         <div className="overflow-y-auto flex flex-col flex-1">
-          {/* Product Image */}
-          <div className="relative w-full h-64 bg-neutral-100 flex-shrink-0">
+          {/* Product Image - Auto Height */}
+          <div className="relative w-full bg-neutral-100 flex-shrink-0">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-auto object-contain"
             />
           </div>
 

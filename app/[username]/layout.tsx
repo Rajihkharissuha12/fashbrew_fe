@@ -1,6 +1,7 @@
 "use client";
 import Navbar from "@/app/[username]/components/Navbar";
 import { useParams } from "next/navigation";
+import CoffeeFooter from "../footer/page";
 
 export default function HomeLayout({
   children,
@@ -13,6 +14,7 @@ export default function HomeLayout({
     <>
       <Navbar username={username} />
       {children}
+      <CoffeeFooter />
     </>
   );
 }

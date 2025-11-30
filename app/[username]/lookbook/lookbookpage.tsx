@@ -458,7 +458,6 @@ export default function LookbookPage() {
           )}
         </main>
       </div>
-      <CoffeeFooter />
     </>
   );
 }

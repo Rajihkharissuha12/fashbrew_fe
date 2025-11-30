@@ -348,9 +348,16 @@ export default function OotdDetail({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-neutral-600">Memuat detail OOTD...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center space-y-4">
+          {/* Rotating Square */}
+          <div className="flex justify-center">
+            <div className="w-8 h-8 border-2 border-orange-500 animate-spin [animation-duration:2s]"></div>
+          </div>
+
+          <p className="text-xs tracking-[0.3em] text-neutral-400 uppercase font-light">
+            OOTD
+          </p>
         </div>
       </div>
     );
@@ -387,7 +394,7 @@ export default function OotdDetail({
         </button>
       </div>
 
-      <main className="container max-w-7xl mx-auto px-4 pb-8">
+      <main className="container max-w-7xl mx-auto px-4 pb-8 mb-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
             {/* Image Carousel */}
@@ -450,16 +457,16 @@ export default function OotdDetail({
                 href={ootd.urlPostInstagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-4 text-sm font-medium text-neutral-900 hover:text-pink-600 transition-colors"
+                className="inline-flex items-center justify-center gap-2 mt-4 px-5 py-2.5 rounded-lg text-sm font-medium text-neutral-900 bg-white border-2 border-neutral-200 hover:border-[#dc2743] hover:text-[#dc2743] transition-all duration-200 group"
               >
                 <svg
-                  className="w-4 h-4"
+                  className="w-5 h-5 group-hover:fill-[#dc2743] transition-colors"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path d="M12 2.163c3.204 0 3.584.011 4.85.07 3.252.148 4.771 1.691 4.919 4.919.059 1.266.07 1.646.07 4.85s-.011 3.585-.07 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.059-1.645.07-4.85.07-3.204 0-3.584-.011-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.059-1.265-.07-1.644-.07-4.849 0-3.204.011-3.584.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z" />
+                  <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z" />
                 </svg>
-                View on Instagram
+                Lihat di Instagram
               </a>
             )}
           </div>
@@ -487,10 +494,6 @@ export default function OotdDetail({
           </div>
         </div>
       </main>
-
-      <div className="mt-12">
-        <CoffeeFooter />
-      </div>
 
       {selectedProduct && (
         <ProductModal product={selectedProduct} onClose={handleCloseModal} />

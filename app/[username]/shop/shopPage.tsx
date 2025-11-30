@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
 import { Search, Filter, ExternalLink, Heart, Share2, Tag } from "lucide-react";
-import CoffeeFooter from "../../footer/page";
 import { useParams } from "next/navigation";
 import {
   ProductGridSkeleton,
@@ -170,27 +168,60 @@ export default function ShopPageClient() {
     });
   };
 
-  const handleShare = (product: Product) => {
-    const shareData = {
-      title: `${product.name} - Recommended Product`,
-      text: `Check out this amazing product: ${product.description}`,
-      url: product.affiliateLink || (product.platforms[0]?.link ?? ""),
-    };
+  const handleShare = async (product: Product) => {
+    // Prioritas: affiliateLink > platform pertama > fallback kosong
+    const shareUrl = product.affiliateLink || product.platforms[0]?.link || "";
 
-    if (navigator.share) {
-      navigator.share(shareData).catch(() => {
-        // fallback clipboard
-        navigator.clipboard
-          .writeText(shareData.url)
-          .then(() => alert("Product link copied to clipboard!"))
-          .catch(() => alert("Failed to copy link."));
-      });
-    } else {
-      navigator.clipboard
-        .writeText(shareData.url)
-        .then(() => alert("Product link copied to clipboard!"))
-        .catch(() => alert("Failed to copy link."));
+    if (!shareUrl) {
+      alert("❌ Link produk tidak tersedia");
+      return;
     }
+
+    try {
+      // Modern Clipboard API
+      await navigator.clipboard.writeText(shareUrl);
+      alert("✅ Link berhasil disalin ke clipboard!");
+    } catch (err) {
+      console.error("Clipboard API failed:", err);
+      // Fallback untuk browser yang tidak support Clipboard API
+      fallbackCopyTextToClipboard(shareUrl);
+    }
+  };
+
+  // Fallback method untuk browser lama
+  const fallbackCopyTextToClipboard = (text: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // Styling agar tidak terlihat
+    textArea.style.position = "fixed";
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.width = "2em";
+    textArea.style.height = "2em";
+    textArea.style.padding = "0";
+    textArea.style.border = "none";
+    textArea.style.outline = "none";
+    textArea.style.boxShadow = "none";
+    textArea.style.background = "transparent";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      const successful = document.execCommand("copy");
+      if (successful) {
+        alert("✅ Link berhasil disalin ke clipboard!");
+      } else {
+        alert("❌ Gagal menyalin link");
+      }
+    } catch (err) {
+      console.error("Fallback: Oops, unable to copy", err);
+      alert("❌ Gagal menyalin link");
+    }
+
+    document.body.removeChild(textArea);
   };
 
   const openModal = (product: Product) => {
@@ -387,78 +418,70 @@ export default function ShopPageClient() {
         {loading && <ProductGridSkeleton />}
 
         {/* Grid Produk */}
+        {/* Grid Produk - Adjusted untuk Fashion/Outfit Photos */}
         {!loading && !error && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             {sortedProducts.map((product) => (
-              <div key={product.id} className="group relative">
+              <div key={product.id} className="group relative flex">
                 {/* Tombol Aksi */}
                 <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex space-x-2 z-10">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      toggleFavorite(product.id);
-                    }}
-                    className={`p-2 sm:p-2.5 rounded-full backdrop-blur-sm transition-all ${
-                      favorites.has(product.id)
-                        ? "bg-red-500 text-white"
-                        : "bg-white/80 text-gray-600 hover:bg-white"
-                    }`}
-                    aria-label="Favorit"
-                  >
-                    <Heart
-                      className={`h-4 w-4 ${
-                        favorites.has(product.id) ? "fill-current" : ""
-                      }`}
-                    />
-                  </button>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
                       handleShare(product);
                     }}
-                    className="p-2 sm:p-2.5 rounded-full bg-white/80 text-gray-600 hover:bg-white transition-all backdrop-blur-sm"
+                    className="p-2 sm:p-2.5 rounded-full bg-white/90 text-gray-600 hover:bg-white hover:shadow-md transition-all backdrop-blur-sm"
                     aria-label="Bagikan"
                   >
                     <Share2 className="h-4 w-4" />
                   </button>
                 </div>
 
-                <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
-                  <div className="relative overflow-hidden">
+                {/* Card dengan Flex Layout untuk Equal Height */}
+                <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 w-full flex flex-col">
+                  {/* Image Container - Taller Height untuk Full Body Outfit */}
+                  <div className="relative overflow-hidden flex-shrink-0">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-52 sm:h-60 md:h-64 lg:h-72 object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-80 sm:h-96 lg:h-[28rem] object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  <div className="p-4 sm:p-5">
-                    <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors line-clamp-2 mb-2">
+                  {/* Content Container - Flex Grow untuk Fill Space */}
+                  <div className="p-4 sm:p-5 flex flex-col flex-grow">
+                    {/* Product Name - Fixed Height dengan Line Clamp */}
+                    <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors line-clamp-2 mb-3 min-h-[3.5rem]">
                       {product.name}
                     </h3>
 
+                    {/* Price */}
                     <div className="flex items-center space-x-2 mb-3">
                       <span className="text-lg sm:text-xl font-bold text-gray-900">
                         {formatCurrency(product.price)}
                       </span>
                     </div>
 
-                    <div className="mb-3">
-                      <span className="bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-medium">
+                    {/* Category Badge */}
+                    <div className="mb-4">
+                      <span className="inline-block bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-medium">
                         {product.category}
                       </span>
                     </div>
 
+                    {/* Spacer untuk Push Button ke Bottom */}
+                    <div className="flex-grow"></div>
+
+                    {/* Button - Selalu di Bottom */}
                     <button
                       onClick={() => openModal(product)}
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2.5 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-200 flex items-center justify-center space-x-2 group"
+                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2.5 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-200 flex items-center justify-center space-x-2 group/btn"
                     >
                       <span>Belanja Sekarang</span>
                       <ExternalLink
                         size={16}
-                        className="h-4 w-4 group-hover:translate-x-1 transition-transform"
+                        className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform"
                       />
                     </button>
                   </div>
@@ -511,11 +534,6 @@ export default function ShopPageClient() {
             </button>
           </div>
         )}
-      </div>
-
-      {/* Footer */}
-      <div className="mt-12">
-        <CoffeeFooter />
       </div>
 
       {/* Modal */}
