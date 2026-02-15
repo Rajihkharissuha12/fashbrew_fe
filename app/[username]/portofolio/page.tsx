@@ -360,12 +360,6 @@ export default function RereAmaliaLanding() {
       title: "Local Coffee Review",
     },
     {
-      category: "DJ",
-      image:
-        "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751364573/fashbrew/pi_newyear_thank_u_luminorhotel.sidoarjo_qqjfn5.jpg",
-      title: "Weekend Vibes Set",
-    },
-    {
       category: "Lifestyle",
       image:
         "https://res.cloudinary.com/dvuza2lpc/image/upload/f_auto,q_auto,w_800/v1751364720/fashbrew/Do_whatever_makes_you_happiest_._cd7aod.jpg",
@@ -778,10 +772,6 @@ export default function RereAmaliaLanding() {
                     Lifestyle Content
                   </span>
                 </span>
-                <span className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-md px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-orange-300 shadow-sm hover:shadow-md transition">
-                  <Music className="h-5 w-5 text-amber-500" />
-                  <span className="text-gray-800 font-medium">DJ</span>
-                </span>
               </div>
             </div>
 
@@ -816,7 +806,7 @@ export default function RereAmaliaLanding() {
                     <Instagram className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900">45K +</p>
+                    <p className="font-bold text-gray-900">46K +</p>
                     <p className="text-sm text-gray-600">Followers</p>
                   </div>
                 </div>
@@ -825,7 +815,7 @@ export default function RereAmaliaLanding() {
                     <Music2 className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900">63K +</p>
+                    <p className="font-bold text-gray-900">64K +</p>
                     <p className="text-sm text-gray-600">Followers</p>
                   </div>
                 </div>
@@ -854,9 +844,6 @@ export default function RereAmaliaLanding() {
                 <strong>koneksi autentik</strong> yang membuat audiens percaya
                 dan bertindak.
                 <br />
-                <br />
-                Setiap konten yang saya buat adalah hasil riset mendalam tentang
-                apa yang audiens butuhkan, bukan hanya apa yang terlihat cantik.
               </p>
             </div>
 
@@ -891,9 +878,6 @@ export default function RereAmaliaLanding() {
                 <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                   Fokus pada{" "}
                   <strong>konten kecantikan, fashion, dan lifestyle</strong>.
-                  Selain itu, Rere juga berpengalaman sebagai{" "}
-                  <strong>DJ di Aston Hotel dan Luminor Hotel</strong>,
-                  memperluas daya tariknya dalam dunia hiburan.
                 </p>
               </div>
             </div>
@@ -956,7 +940,7 @@ export default function RereAmaliaLanding() {
               <div className="grid grid-cols-1 gap-3 sm:gap-4 text-center mt-4 sm:mt-6">
                 <div>
                   <p className="text-2xl sm:text-3xl font-bold text-gray-900">
-                    45K+
+                    46K+
                   </p>
                   <p className="text-gray-600 text-xs sm:text-sm">Followers</p>
                 </div>
@@ -973,7 +957,7 @@ export default function RereAmaliaLanding() {
               <div className="grid grid-cols-1 gap-3 sm:gap-4 text-center mt-4 sm:mt-6">
                 <div>
                   <p className="text-2xl sm:text-3xl font-bold text-gray-900">
-                    63K+
+                    64K+
                   </p>
                   <p className="text-gray-600 text-xs sm:text-sm">Followers</p>
                 </div>
@@ -1127,7 +1111,7 @@ export default function RereAmaliaLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-10">
             {portfolioItems.map((item, index) => (
               <div
                 key={index}
@@ -1576,19 +1560,7 @@ export default function RereAmaliaLanding() {
               <Phone className="w-5 h-5" />
               Chat via WhatsApp
             </a>
-
-            <a
-              href="mailto:reereamalia@example.com"
-              className="border-2 border-white text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white hover:text-orange-600 transition-all inline-flex items-center gap-2"
-            >
-              <Mail className="w-5 h-5" />
-              Email Partnership
-            </a>
           </div>
-
-          <p className="text-sm mt-6 opacity-75">
-            {"Response time: < 24 jam | Available for urgent projects"}
-          </p>
         </div>
       </section>
 
