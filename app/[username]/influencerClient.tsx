@@ -26,7 +26,7 @@ export default function InfluencerClient() {
   const params = useParams();
   const username = params?.username as string;
 
-  return redirect(`http://localhost:3000/${username}/lookbook`);
+  return redirect(`https://www.fashbreew.com/${username}/lookbook`);
 
   const dummyCafes = [
     {
