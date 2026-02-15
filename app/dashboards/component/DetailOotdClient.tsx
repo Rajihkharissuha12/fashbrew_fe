@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import OotdFormModal from "../component/OotdFormModal";
+import OotdFormModal from "./OotdFormModal";
 
 type PlatformType = "tiktok" | "shopee" | "tokopedia" | "other";
 

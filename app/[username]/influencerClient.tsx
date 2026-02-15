@@ -26,9 +26,7 @@ export default function InfluencerClient() {
   const params = useParams();
   const username = params?.username as string;
 
-  if (username !== "rereamalia") {
-    return redirect(`http://localhost:3000/${username}/lookbook`);
-  }
+  return redirect(`http://localhost:3000/${username}/lookbook`);
 
   const dummyCafes = [
     {

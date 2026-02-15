@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import OotdFormModal from "../component/OotdFormModal";
+import OotdFormModal from "./OotdFormModal";
 import { tree } from "next/dist/build/templates/app-page";
 import ConfirmDialog from "./ConfirmDialog";
 

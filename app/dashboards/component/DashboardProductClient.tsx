@@ -2,7 +2,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import ProductFormModal from "../component/ProductFormModal";
+import ProductFormModal from "./ProductFormModal";
 import {
   Search,
   Plus,

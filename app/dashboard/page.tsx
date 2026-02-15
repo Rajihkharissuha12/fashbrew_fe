@@ -1,12 +1,5 @@
-import { Metadata } from "next";
-import DashboardPageClient from "./dashboardPage";
-import { createSupabaseServer } from "../utils/supabase/server";
 import { redirect } from "next/navigation";
-
-export const metadata: Metadata = {
-  title: "Dashboard",
-  robots: { index: false, follow: true },
-};
+import { createSupabaseServer } from "../utils/supabase/server";
 
 export default async function DashboardHome() {
   const supabase = await createSupabaseServer();
@@ -17,7 +10,10 @@ export default async function DashboardHome() {
   if (!user) {
     redirect(`/login?next=${encodeURIComponent("/dashboard")}`);
   }
-
-  // User sudah resolved, pas langsung ke client component
-  return <DashboardPageClient user={user} />;
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-4">Overview</h1>
+      <p>Selamat datang di Dashboard Admin.</p>
+    </div>
+  );
 }

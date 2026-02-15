@@ -115,11 +115,6 @@ export default async function DashboardOotd({
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  // const influencerId = await getInfluencerIdByAuthUserId(user.id);
-  // if (!influencerId) {
-  //   redirect("/onboarding");
-  // }
-
   const params = await searchParams;
   const page = Math.max(Number(params.page || 1), 1);
   const pageSize = Math.min(Math.max(Number(params.pageSize || 10), 1), 100);

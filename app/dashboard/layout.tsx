@@ -1,27 +1,32 @@
-import { useState } from "react";
+import { redirect } from "next/navigation";
 import { createSupabaseServer } from "../utils/supabase/server";
-import SidebarNav from "./component/Sidebar";
-import { Menu, X } from "lucide-react";
-import NavigationProgress from "./component/NavigationProgress";
+import NavigationProgress from "../dashboards/component/NavigationProgress";
 import DashboardShell from "./component/DashboardClient";
 
-export const revalidate = 3600; // Cache 1 jam
+export const revalidate = 0; // Disable cache untuk auth check
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createSupabaseServer();
+  const supabase = await createSupabaseServer();
+
+  // Check authentication
   const {
     data: { user },
-  } = await (await supabase).auth.getUser();
-  if (!user) return null;
+    error,
+  } = await supabase.auth.getUser();
+
+  // Redirect to login if not authenticated
+  if (error || !user) {
+    redirect("/login"); // atau "/auth/login" sesuai route kamu
+  }
 
   return (
     <>
       <NavigationProgress />
-      <DashboardShell>{children}</DashboardShell>
+      <DashboardShell user={user}>{children}</DashboardShell>
     </>
   );
 }

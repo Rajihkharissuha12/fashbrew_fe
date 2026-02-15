@@ -1,9 +1,8 @@
 "use client";
 
-import React, { use, useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, ChevronLeft, ChevronRight } from "lucide-react";
-import CoffeeFooter from "@/app/footer/page";
 import ProductList from "@/app/[username]/lookbook/components/ProductList";
 import ProductModal from "@/app/[username]/lookbook/components/ProductModal";
 
@@ -124,10 +123,10 @@ interface OOTDDetail {
 }
 
 interface Props {
-  params: {
+  params: Promise<{
     username: string;
     id: string;
-  };
+  }>;
 }
 
 // Image Carousel Component
@@ -137,14 +136,31 @@ interface ImageCarouselProps {
 }
 
 const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, title }) => {
+  const safeImages = images.filter(
+    (u) => typeof u === "string" && u.trim() !== "",
+  );
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [safeImages.length]);
+
+  if (safeImages.length === 0) {
+    return (
+      <div className="aspect-[3/4] bg-neutral-100 rounded-lg overflow-hidden mb-4 flex items-center justify-center">
+        <span className="text-sm text-neutral-500">No image available</span>
+      </div>
+    );
+  }
+
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setCurrentImageIndex((prev) => (prev + 1) % safeImages.length);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setCurrentImageIndex(
+      (prev) => (prev - 1 + safeImages.length) % safeImages.length,
+    );
   };
 
   const goToImage = (index: number) => {
@@ -153,52 +169,52 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, title }) => {
 
   return (
     <div className="relative">
-      {/* Main Image Container */}
       <div className="aspect-[3/4] bg-neutral-100 rounded-lg overflow-hidden mb-4 relative group">
         <img
-          src={images[currentImageIndex]}
+          src={safeImages[currentImageIndex]}
           alt={`${title} - Image ${currentImageIndex + 1}`}
           className="w-full h-full object-cover transition-opacity duration-300"
+          loading="eager"
         />
 
-        {/* Navigation Arrows - Only show if more than 1 image */}
-        {images.length > 1 && (
+        {safeImages.length > 1 && (
           <>
             <button
               onClick={prevImage}
               className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-neutral-800 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+              aria-label="Previous image"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={nextImage}
               className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white text-neutral-800 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg"
+              aria-label="Next image"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
           </>
         )}
 
-        {/* Image Counter */}
-        {images.length > 1 && (
+        {safeImages.length > 1 && (
           <div className="absolute top-4 right-4 bg-black/50 text-white text-xs px-2 py-1 rounded">
-            {currentImageIndex + 1} / {images.length}
+            {currentImageIndex + 1} / {safeImages.length}
           </div>
         )}
       </div>
 
-      {/* Thumbnail Navigation - Only show if more than 1 image */}
-      {images.length > 1 && (
+      {safeImages.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-2">
-          {images.map((image, index) => (
+          {safeImages.map((image, index) => (
             <button
-              key={index}
+              key={image}
               onClick={() => goToImage(index)}
               className={`flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2 transition-all duration-200 ${
                 currentImageIndex === index
                   ? "border-neutral-800 opacity-100"
                   : "border-transparent opacity-60 hover:opacity-80"
               }`}
+              aria-label={`Go to image ${index + 1}`}
             >
               <img
                 src={image}
@@ -210,10 +226,9 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, title }) => {
         </div>
       )}
 
-      {/* Dot Indicators */}
-      {images.length > 1 && (
+      {safeImages.length > 1 && (
         <div className="flex justify-center gap-1 mt-4">
-          {images.map((_, index) => (
+          {safeImages.map((_, index) => (
             <button
               key={index}
               onClick={() => goToImage(index)}
@@ -222,6 +237,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, title }) => {
                   ? "bg-neutral-800"
                   : "bg-neutral-300 hover:bg-neutral-500"
               }`}
+              aria-label={`Go to dot ${index + 1}`}
             />
           ))}
         </div>
@@ -230,113 +246,121 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({ images, title }) => {
   );
 };
 
-export default function OotdDetail({
-  params,
-}: {
-  params: Promise<Props["params"]>;
-}) {
-  const { username, id } = use(params);
+type ApiResponse<T> = { data?: T };
+
+export default function OotdDetail({ params }: Props) {
+  const { username, id } = React.use(params);
   const router = useRouter();
-  const [ootd, setOotd] = useState<OOTDDetail | null>(null);
+
+  const [raw, setRaw] = useState<ApiOotdDetail | null>(null);
   const [selectedProduct, setSelectedProduct] =
     useState<TransformedProduct | null>(null);
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Transform API response ke format component
-  const transformOotdData = (apiData: ApiOotdDetail): OOTDDetail => {
-    // Extract images dari media array, sorted by isPrimary dan createdAt
-    const images = apiData.media
-      .filter((m) => m.type === "image")
+  // Fetch data dari API (dengan cancellation)
+  useEffect(() => {
+    if (!id) return;
+
+    const base = process.env.NEXT_PUBLIC_API_BASE_URL;
+    if (!base) {
+      setError("NEXT_PUBLIC_API_BASE_URL belum diset");
+      setStatus("error");
+      return;
+    }
+
+    const controller = new AbortController();
+    const { signal } = controller;
+
+    const fetchOOTDDetail = async () => {
+      try {
+        setStatus("loading");
+        setError(null);
+        setRaw(null); // penting: reset supaya tidak kebaca sebagai "not found" state lama
+
+        const res = await fetch(`${base}/api/ootds/byid/${id}`, { signal });
+        if (!res.ok) throw new Error(`Failed to fetch OOTD: ${res.statusText}`);
+
+        const json = (await res.json()) as { data?: ApiOotdDetail };
+        if (!json.data) throw new Error("Look not found");
+
+        setRaw(json.data);
+        setStatus("success");
+      } catch (e) {
+        if ((e as any)?.name === "AbortError") return;
+        setError(e instanceof Error ? e.message : "An error occurred");
+        setStatus("error");
+      }
+    };
+
+    fetchOOTDDetail();
+    return () => controller.abort();
+  }, [id]);
+
+  // Transform API response -> format component (memoized)
+  const ootd: OOTDDetail | null = useMemo(() => {
+    if (!raw) return null;
+
+    const images = raw.media
+      .filter((m) => m.type === "image" && m.url && m.url.trim() !== "")
       .sort((a, b) => {
-        // Primary image first
         if (a.isPrimary && !b.isPrimary) return -1;
         if (!a.isPrimary && b.isPrimary) return 1;
-        // Then sort by creation date
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
       })
       .map((m) => m.url);
 
-    // Transform products
-    const products: TransformedProduct[] = apiData.ootdProducts
-      .filter((op) => op.product && op.product.platforms.length > 0)
+    const products: TransformedProduct[] = raw.ootdProducts
+      .filter((op) => op.product && Array.isArray(op.product.platforms))
       .sort((a, b) => (a.position || 0) - (b.position || 0))
       .map((op) => {
         const product = op.product;
+
+        const platforms = product.platforms
+          .filter((p) => p.link && p.link.trim() !== "")
+          .map((p) => ({
+            platform: p.platform,
+            price: p.price
+              ? `Rp ${parseInt(p.price).toLocaleString("id-ID")}`
+              : "N/A",
+            link: p.link,
+          }))
+          .filter((p) => p.link);
+
         return {
           id: product.id,
           name: product.name,
           price: `Rp ${parseInt(product.price).toLocaleString("id-ID")}`,
           image: product.image,
           description: product.description,
-          platforms: product.platforms
-            .filter((p) => p.link && p.link.trim() !== "")
-            .map((p) => ({
-              platform: p.platform,
-              price: p.price
-                ? `Rp ${parseInt(p.price).toLocaleString("id-ID")}`
-                : "N/A",
-              link: p.link,
-            })),
+          platforms,
         };
       })
       .filter((p) => p.platforms.length > 0);
 
     return {
-      id: apiData.id,
-      images: images.length > 0 ? images : [""],
-      title: apiData.title,
-      description: apiData.description,
-      mood: apiData.mood,
+      id: raw.id,
+      images, // penting: kalau kosong, tetap [] (jangan [""])
+      title: raw.title,
+      description: raw.description,
+      mood: raw.mood || [],
       influencer: {
-        id: apiData.influencer.id,
-        name: apiData.influencer.name,
-        handle: `@${apiData.influencer.handle}`,
+        id: raw.influencer.id,
+        name: raw.influencer.name,
+        handle: `@${raw.influencer.handle}`,
       },
       products,
-      urlPostInstagram: apiData.urlPostInstagram,
-      viewCount: apiData.viewCount,
-      likeCount: apiData.likeCount,
+      urlPostInstagram: raw.urlPostInstagram,
+      viewCount: raw.viewCount,
+      likeCount: raw.likeCount,
     };
-  };
-
-  // Fetch data dari API
-  useEffect(() => {
-    if (!id) return;
-
-    const fetchOOTDDetail = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/ootds/byid/${id}`
-        );
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch OOTD: ${response.statusText}`);
-        }
-
-        const apiData = await response.json();
-        console.log("Raw API Data:", apiData);
-
-        // Transform data
-        const transformedData = transformOotdData(apiData.data);
-        console.log("Transformed Data:", transformedData);
-
-        setOotd(transformedData);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching OOTD:", err);
-        setError(err instanceof Error ? err.message : "An error occurred");
-        setOotd(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOOTDDetail();
-  }, [id]);
+  }, [raw]);
 
   const handleProductClick = (product: TransformedProduct) => {
     setSelectedProduct(product);
@@ -346,15 +370,13 @@ export default function OotdDetail({
     setSelectedProduct(null);
   };
 
-  if (loading) {
+  if (status === "idle" || status === "loading") {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center space-y-4">
-          {/* Rotating Square */}
           <div className="flex justify-center">
-            <div className="w-8 h-8 border-2 border-orange-500 animate-spin [animation-duration:2s]"></div>
+            <div className="w-8 h-8 border-2 border-orange-500 animate-spin [animation-duration:2s]" />
           </div>
-
           <p className="text-xs tracking-[0.3em] text-neutral-400 uppercase font-light">
             OOTD
           </p>
@@ -363,7 +385,7 @@ export default function OotdDetail({
     );
   }
 
-  if (error || !ootd) {
+  if (status === "error") {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <div className="text-center">
@@ -381,9 +403,13 @@ export default function OotdDetail({
     );
   }
 
+  if (!ootd) {
+    // fallback guard (harusnya tidak kejadian)
+    return null;
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* Back Button */}
       <div className="max-w-7xl mx-auto lg:px-8 px-4 py-4">
         <button
           onClick={() => router.push(`/${username}/lookbook`)}
@@ -397,25 +423,21 @@ export default function OotdDetail({
       <main className="container max-w-7xl mx-auto px-4 pb-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
-            {/* Image Carousel */}
             <ImageCarousel images={ootd.images} title={ootd.title} />
 
-            {/* Title */}
             <h1 className="text-2xl font-light text-neutral-900 leading-relaxed mt-6">
               {ootd.title}
             </h1>
 
-            {/* Description */}
             <p className="text-neutral-600 leading-relaxed mt-4">
               {ootd.description}
             </p>
 
-            {/* Mood Tags */}
-            {ootd.mood && ootd.mood.length > 0 && (
+            {ootd.mood.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-4">
                 {ootd.mood.map((m, idx) => (
                   <span
-                    key={idx}
+                    key={`${m}-${idx}`}
                     className="inline-block bg-neutral-100 text-neutral-700 text-xs px-3 py-1 rounded-full capitalize"
                   >
                     {m}
@@ -424,7 +446,6 @@ export default function OotdDetail({
               </div>
             )}
 
-            {/* Engagement Stats */}
             <div className="flex gap-4 mt-6 text-sm text-neutral-600">
               <div>
                 <span className="font-medium text-neutral-900">
@@ -440,7 +461,6 @@ export default function OotdDetail({
               </div>
             </div>
 
-            {/* Influencer Info */}
             <div className="text-sm text-neutral-500 pt-4 border-t mt-6 border-neutral-200">
               Styled by{" "}
               <span className="font-medium text-neutral-700">
@@ -451,7 +471,6 @@ export default function OotdDetail({
               </span>
             </div>
 
-            {/* Instagram Link */}
             {ootd.urlPostInstagram && (
               <a
                 href={ootd.urlPostInstagram}
@@ -471,7 +490,6 @@ export default function OotdDetail({
             )}
           </div>
 
-          {/* Products Section */}
           <div>
             <div className="sticky top-24">
               <h2 className="text-lg font-light text-neutral-900 mb-6">

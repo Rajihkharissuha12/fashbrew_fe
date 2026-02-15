@@ -28,10 +28,9 @@ interface OOTDCardProps {
   image?: string;
   video?: string;
   title: string;
-  description: string | null;
   mood: string[];
   influencer: Influencer;
-  products?: Product[];
+  productscount?: number;
   urlPostInstagram?: string;
   number: number;
 }
@@ -44,7 +43,7 @@ export default function OOTDCard({
   mood,
   number,
   influencer,
-  products = [],
+  productscount,
   urlPostInstagram,
 }: OOTDCardProps) {
   const router = useRouter();
@@ -177,7 +176,7 @@ export default function OOTDCard({
         </div>
 
         {/* Products Count Badge - Bottom Left Corner */}
-        {products && products.length > 0 && (
+        {productscount && productscount > 0 && (
           <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full flex items-center gap-1.5">
             <svg
               className="w-3.5 h-3.5 text-white"
@@ -193,7 +192,7 @@ export default function OOTDCard({
               />
             </svg>
             <span className="text-white text-xs font-semibold">
-              {products.length}
+              {productscount}
             </span>
           </div>
         )}
