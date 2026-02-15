@@ -118,7 +118,7 @@ export default function Navbar({ username }: { username: string }) {
                 >
                   Shop
                 </Link>
-                {username === "rereamalia" && (
+                {/* {username === "rereamalia" && (
                   <>
                     <Link
                       href={`/${username}`}
@@ -138,7 +138,7 @@ export default function Navbar({ username }: { username: string }) {
                       Portofolio
                     </Link>
                   </>
-                )}
+                )} */}
               </div>
             </div>
           </div>
