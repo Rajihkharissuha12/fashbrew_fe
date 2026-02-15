@@ -5,14 +5,15 @@ import { createSupabaseServer } from "@/app/utils/supabase/server";
 import OotdSearchBar from "./component/Searchbar";
 
 type PageProps = {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
     sort?: string;
     page?: string;
-  };
+  }>;
 };
 
 export default async function OotdPage({ searchParams }: PageProps) {
+  const { q, sort, page } = await searchParams;
   const supabase = await createSupabaseServer();
 
   // Get authenticated user
@@ -31,7 +32,7 @@ export default async function OotdPage({ searchParams }: PageProps) {
   // Get influencer ID by user ID
   const { data: influencerId, error } = await supabase.rpc(
     "get_influencer_id_by_auth_user_id",
-    { p_auth_user_id: user.id }
+    { p_auth_user_id: user.id },
   );
 
   if (error) {
@@ -62,9 +63,9 @@ export default async function OotdPage({ searchParams }: PageProps) {
   }
 
   // Extract search params
-  const initialSearch = searchParams.q || "";
-  const initialSort = searchParams.sort || "createdDesc";
-  const initialPage = parseInt(searchParams.page || "1");
+  const initialSearch = (await searchParams).q || "";
+  const initialSort = (await searchParams).sort || "createdDesc";
+  const initialPage = parseInt((await searchParams).page || "1");
 
   return (
     <div className="min-h-screen">
