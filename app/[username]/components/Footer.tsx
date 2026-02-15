@@ -23,7 +23,7 @@ const Footer = () => {
                 onClick={() =>
                   window.open(
                     "https://www.instagram.com/kattapacoffee",
-                    "_blank"
+                    "_blank",
                   )
                 }
               >
@@ -137,7 +137,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="text-cafe-600 hover:underline font-medium"
               >
-                Otakutixx
+                Aisolusimuda
               </a>
               .
             </p>

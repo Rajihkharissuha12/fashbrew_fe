@@ -244,7 +244,7 @@ export default function RereAmaliaLanding() {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             cache: "no-store",
-          }
+          },
         );
         if (!res.ok) throw new Error(`Request failed: ${res.status}`);
         const json: { success: boolean; data: ApiProduct[] } = await res.json();
@@ -599,7 +599,7 @@ export default function RereAmaliaLanding() {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
   const prevTestimonial = () =>
     setCurrentTestimonial(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
     );
 
   const handleSubmit = (e: any) => {
@@ -607,8 +607,8 @@ export default function RereAmaliaLanding() {
     const user = name;
     const pesan = message;
     const waMessage = `Halo rere, saya ${user}. \n\n${pesan}`;
-    const waLink = `https://wa.me/6285748578429?text=${encodeURIComponent(
-      waMessage
+    const waLink = `https://wa.me/6285178421126?text=${encodeURIComponent(
+      waMessage,
     )}`;
     window.open(waLink, "_blank");
   };
@@ -727,7 +727,7 @@ export default function RereAmaliaLanding() {
         return arr.sort(
           (a, b) =>
             new Date(b.lastUpdated).getTime() -
-            new Date(a.lastUpdated).getTime()
+            new Date(a.lastUpdated).getTime(),
         );
       default:
         return arr;
@@ -788,7 +788,7 @@ export default function RereAmaliaLanding() {
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
               <a
-                href="https://wa.me/6285748578429?text=Hallo%20Rere%2C%20mau%20endorse%20dong"
+                href="https://wa.me/6285178421126?text=Hallo%20Rere%2C%20mau%20endorse%20dong"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -1408,7 +1408,7 @@ export default function RereAmaliaLanding() {
                         key={i}
                         className="h-5 w-5 text-yellow-400 fill-current drop-shadow"
                       />
-                    )
+                    ),
                   )}
                 </div>
 
@@ -1494,8 +1494,8 @@ export default function RereAmaliaLanding() {
                   </ul>
                 </div>
                 <a
-                  href={`https://wa.me/6285748578429?text=Halo%2C%20saya%20tertarik%20dengan%20paket%20${encodeURIComponent(
-                    item.title
+                  href={`https://wa.me/6285178421126?text=Halo%2C%20saya%20tertarik%20dengan%20paket%20${encodeURIComponent(
+                    item.title,
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -1569,7 +1569,7 @@ export default function RereAmaliaLanding() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="https://wa.me/6285748578429?text=Halo%20Rere%2C%20saya%20tertarik%20untuk%20diskusi%20kolaborasi"
+              href="https://wa.me/6285178421126?text=Halo%20Rere%2C%20saya%20tertarik%20untuk%20diskusi%20kolaborasi"
               target="_blank"
               className="bg-white text-orange-600 px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all inline-flex items-center gap-2"
             >
@@ -1641,8 +1641,8 @@ export default function RereAmaliaLanding() {
                         platform.platform === "tiktok"
                           ? "from-black to-gray-800"
                           : platform.platform === "shopee"
-                          ? "from-orange-500 to-red-500"
-                          : "from-green-500 to-green-600"
+                            ? "from-orange-500 to-red-500"
+                            : "from-green-500 to-green-600"
                       } opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
                     />
                     <div className="relative flex items-center gap-3 sm:gap-4 p-3 sm:p-4 group-hover:text-white transition-colors">
@@ -1650,8 +1650,8 @@ export default function RereAmaliaLanding() {
                         {platform.platform === "tiktok"
                           ? "🎵"
                           : platform.platform === "shopee"
-                          ? "🛍️"
-                          : "🛒"}
+                            ? "🛍️"
+                            : "🛒"}
                       </div>
                       <div className="flex-1 text-left">
                         <div className="font-semibold text-base sm:text-lg text-black group-hover:text-white">
