@@ -101,7 +101,7 @@ export default function ShopPageClient() {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             cache: "no-store",
-          }
+          },
         );
         if (!res.ok) {
           throw new Error(`Request failed: ${res.status}`);
@@ -274,7 +274,7 @@ export default function ShopPageClient() {
         return arr.sort(
           (a, b) =>
             new Date(b.lastUpdated).getTime() -
-            new Date(a.lastUpdated).getTime()
+            new Date(a.lastUpdated).getTime(),
         );
       default:
         return arr;
@@ -420,68 +420,68 @@ export default function ShopPageClient() {
         {/* Grid Produk */}
         {/* Grid Produk - Adjusted untuk Fashion/Outfit Photos */}
         {!loading && !error && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
             {sortedProducts.map((product) => (
               <div key={product.id} className="group relative flex">
                 {/* Tombol Aksi */}
-                <div className="absolute top-2 sm:top-3 right-2 sm:right-3 flex space-x-2 z-10">
+                <div className="absolute top-1.5 md:top-2 right-1.5 md:right-2 flex space-x-1.5 md:space-x-2 z-10">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleShare(product);
                     }}
-                    className="p-2 sm:p-2.5 rounded-full bg-white/90 text-gray-600 hover:bg-white hover:shadow-md transition-all backdrop-blur-sm"
+                    className="p-1.5 md:p-2 rounded-full bg-white/90 text-gray-600 hover:bg-white hover:shadow-md transition-all backdrop-blur-sm"
                     aria-label="Bagikan"
                   >
-                    <Share2 className="h-4 w-4" />
+                    <Share2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   </button>
                 </div>
 
                 {/* Card dengan Flex Layout untuk Equal Height */}
-                <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 w-full flex flex-col">
-                  {/* Image Container - Taller Height untuk Full Body Outfit */}
+                <div className="bg-white rounded-xl md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 w-full flex flex-col">
+                  {/* Image Container */}
                   <div className="relative overflow-hidden flex-shrink-0">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-80 sm:h-96 lg:h-[28rem] object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-48 md:h-64 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  {/* Content Container - Flex Grow untuk Fill Space */}
-                  <div className="p-4 sm:p-5 flex flex-col flex-grow">
-                    {/* Product Name - Fixed Height dengan Line Clamp */}
-                    <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors line-clamp-2 mb-3 min-h-[3.5rem]">
+                  {/* Content Container */}
+                  <div className="p-3 md:p-4 lg:p-5 flex flex-col flex-grow">
+                    {/* Product Name */}
+                    <h3 className="text-xs md:text-sm lg:text-base font-bold text-gray-900 group-hover:text-amber-600 transition-colors line-clamp-2 mb-2 md:mb-3 min-h-[2.5rem] md:min-h-[3rem]">
                       {product.name}
                     </h3>
 
                     {/* Price */}
-                    <div className="flex items-center space-x-2 mb-3">
-                      <span className="text-lg sm:text-xl font-bold text-gray-900">
+                    <div className="flex items-center space-x-2 mb-2 md:mb-3">
+                      <span className="text-sm md:text-base lg:text-lg font-bold text-gray-900">
                         {formatCurrency(product.price)}
                       </span>
                     </div>
 
                     {/* Category Badge */}
-                    <div className="mb-4">
-                      <span className="inline-block bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-medium">
+                    <div className="mb-3 md:mb-4">
+                      <span className="inline-block bg-gradient-to-r from-amber-100 to-orange-100 text-amber-700 px-2 md:px-2.5 py-0.5 md:py-1 rounded-full text-[10px] md:text-xs font-medium">
                         {product.category}
                       </span>
                     </div>
 
-                    {/* Spacer untuk Push Button ke Bottom */}
+                    {/* Spacer */}
                     <div className="flex-grow"></div>
 
-                    {/* Button - Selalu di Bottom */}
+                    {/* Button */}
                     <button
                       onClick={() => openModal(product)}
-                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2.5 px-4 rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-200 flex items-center justify-center space-x-2 group/btn"
+                      className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-2 md:py-2.5 px-3 md:px-4 rounded-lg md:rounded-xl text-xs md:text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all duration-200 flex items-center justify-center space-x-1.5 md:space-x-2 group/btn"
                     >
                       <span>Belanja Sekarang</span>
                       <ExternalLink
-                        size={16}
-                        className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform"
+                        size={14}
+                        className="h-3 w-3 md:h-4 md:w-4 group-hover/btn:translate-x-1 transition-transform"
                       />
                     </button>
                   </div>
@@ -587,8 +587,8 @@ export default function ShopPageClient() {
                         platform.platform === "tiktok"
                           ? "from-black to-gray-800"
                           : platform.platform === "shopee"
-                          ? "from-orange-500 to-red-500"
-                          : "from-green-500 to-green-600"
+                            ? "from-orange-500 to-red-500"
+                            : "from-green-500 to-green-600"
                       } opacity-0 group-hover:opacity-100 transition-opacity duration-200`}
                     />
                     <div className="relative flex items-center gap-3 sm:gap-4 p-3 sm:p-4 group-hover:text-white transition-colors">
@@ -596,8 +596,8 @@ export default function ShopPageClient() {
                         {platform.platform === "tiktok"
                           ? "🎵"
                           : platform.platform === "shopee"
-                          ? "🛍️"
-                          : "🛒"}
+                            ? "🛍️"
+                            : "🛒"}
                       </div>
                       <div className="flex-1 text-left">
                         <div className="font-semibold text-base sm:text-lg text-black group-hover:text-white capitalize">
