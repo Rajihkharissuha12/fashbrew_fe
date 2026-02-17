@@ -58,7 +58,7 @@ type UserProfile = {
 // Fetch user profile by userId
 async function fetchMyProfile(
   apiBase: string,
-  userId: string
+  userId: string,
 ): Promise<UserProfile> {
   const res = await fetch(`${apiBase}/api/users/${userId}`, {
     cache: "no-store",
@@ -70,7 +70,7 @@ async function fetchMyProfile(
 
 export default function ProfileClient({
   userId,
-  apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000",
 }: {
   userId: string;
   apiBaseUrl?: string;
@@ -250,7 +250,10 @@ export default function ProfileClient({
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {Object.entries(
-                          users.influencer.socialLinks as Record<string, string>
+                          users.influencer.socialLinks as Record<
+                            string,
+                            string
+                          >,
                         ).map(([platform, url]) => (
                           <a
                             key={platform}
@@ -288,7 +291,7 @@ export default function ProfileClient({
                       {
                         month: "short",
                         year: "numeric",
-                      }
+                      },
                     )}
                   </span>
                 </div>
@@ -305,7 +308,7 @@ export default function ProfileClient({
                           month: "short",
                           hour: "2-digit",
                           minute: "2-digit",
-                        }
+                        },
                       )}
                     </span>
                   </div>
@@ -456,7 +459,7 @@ export default function ProfileClient({
                                 month: "short",
                                 hour: "2-digit",
                                 minute: "2-digit",
-                              }
+                              },
                             )}
                           </p>
                         </div>

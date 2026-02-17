@@ -153,7 +153,7 @@ const ProductFormModal: React.FC<ProductFormModalProps> = ({
   initialData = null,
   userId = "",
   onSuccess,
-  apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
+  apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000",
 }) => {
   // ===== STATE MANAGEMENT =====
   const [loading, setLoading] = useState(false);

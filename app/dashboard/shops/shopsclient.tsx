@@ -52,7 +52,7 @@ export default function ShopsList({ userId }: { userId: string }) {
       params.append("pageSize", String(pageSize));
 
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/products?${params.toString()}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000"}/api/products?${params.toString()}`,
         { cache: "no-store" },
       );
 
@@ -81,7 +81,8 @@ export default function ShopsList({ userId }: { userId: string }) {
 
     try {
       setDeleting(true);
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000";
 
       const response = await fetch(
         `${apiUrl}/api/products/${productToDelete.id}`,
