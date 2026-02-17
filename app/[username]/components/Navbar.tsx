@@ -39,12 +39,12 @@ export default function Navbar({ username }: { username: string }) {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            <Link
+            {/* <Link
               href={`/${username}/lookbook`}
               className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
             >
               Lookbook
-            </Link>
+            </Link> */}
             <Link
               href={`/${username}/shop`}
               className="text-gray-600 hover:text-gray-900 transition-colors font-medium"
@@ -104,13 +104,13 @@ export default function Navbar({ username }: { username: string }) {
               </div>
 
               <div className="px-4 pb-4">
-                <Link
+                {/* <Link
                   href={`/${username}/lookbook`}
                   onClick={closeMenu}
                   className="block px-3 py-3 text-gray-700 hover:bg-gray-100 rounded-md font-medium transition-colors"
                 >
                   Lookbook
-                </Link>
+                </Link> */}
                 <Link
                   href={`/${username}/shop`}
                   onClick={closeMenu}

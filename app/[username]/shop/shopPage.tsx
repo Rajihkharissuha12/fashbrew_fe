@@ -238,11 +238,25 @@ export default function ShopPageClient() {
     const term = searchTerm.toLowerCase().trim();
 
     return products.filter((product) => {
-      const matchesSearch =
-        !term ||
-        product.name.toLowerCase().includes(term) ||
-        product.description.toLowerCase().includes(term) ||
-        product.tags.some((tag) => tag.toLowerCase().includes(term));
+      const isNumericSearch = /^\d+$/.test(term); // Check if pure number
+      const numericValue = isNumericSearch ? parseInt(term) : null;
+
+      let matchesSearch;
+
+      if (isNumericSearch && numericValue !== null) {
+        // Jika input adalah angka, hanya cek clicks (exact match)
+        matchesSearch = product.clicks === numericValue;
+      } else if (!term) {
+        // Jika tidak ada search term, tampilkan semua
+        matchesSearch = true;
+      } else {
+        // Jika input bukan angka, cek string fields (partial match)
+        matchesSearch =
+          product.name.toLowerCase().includes(term) ||
+          product.description?.toLowerCase().includes(term) ||
+          product.category?.toLowerCase().includes(term) ||
+          product.tags?.some((tag) => tag.toLowerCase().includes(term));
+      }
 
       const matchesCategory =
         filterCategory === "All" || product.category === filterCategory;
@@ -418,7 +432,6 @@ export default function ShopPageClient() {
         {loading && <ProductGridSkeleton />}
 
         {/* Grid Produk */}
-        {/* Grid Produk - Adjusted untuk Fashion/Outfit Photos */}
         {!loading && !error && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
             {sortedProducts.map((product) => (
