@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Plus, Package, Eye, Edit2, Trash2, Tag } from "lucide-react";
+import {
+  Search,
+  Plus,
+  Package,
+  Eye,
+  Edit2,
+  Trash2,
+  Tag,
+  AlertTriangle,
+} from "lucide-react";
 import ProductDetailModal from "./detailproduct";
 import { ProductWithPlatformsRow } from "@/app/dashboards/component/DashboardProductClient";
 import ProductFormModal from "./component/ModalFormProduct";
@@ -16,7 +25,7 @@ type Product = {
   platforms: any[];
 };
 
-export default function ShopsList() {
+export default function ShopsList({ userId }: { userId: string }) {
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
@@ -26,6 +35,11 @@ export default function ShopsList() {
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState<ProductWithPlatformsRow | null>(null);
   const [detailProduct, setDetailProduct] = useState<Product | null>(null);
+
+  // State untuk delete confirmation
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const totalPages = Math.ceil(total / pageSize);
 
@@ -38,8 +52,8 @@ export default function ShopsList() {
       params.append("pageSize", String(pageSize));
 
       const res = await fetch(
-        `http://localhost:4000/api/products?${params.toString()}`,
-        { cache: "no-store" }
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000"}/api/products?${params.toString()}`,
+        { cache: "no-store" },
       );
 
       const json = await res.json();
@@ -59,6 +73,53 @@ export default function ShopsList() {
     setPageSize(nextPageSize);
     setPage(nextPage);
     fetchProducts(nextPage, q);
+  }
+
+  // ===== DELETE PRODUCT HANDLER =====
+  async function handleDeleteProduct() {
+    if (!productToDelete) return;
+
+    try {
+      setDeleting(true);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
+
+      const response = await fetch(
+        `${apiUrl}/api/products/${productToDelete.id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          errorText || `Failed to delete product (${response.status})`,
+        );
+      }
+
+      // Success - refresh products list
+      await fetchProducts(page, search);
+
+      // Close modal and reset state
+      setDeleteModal(false);
+      setProductToDelete(null);
+    } catch (err: any) {
+      console.error("Error deleting product:", err);
+      alert(err?.message || "Gagal menghapus produk");
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  function openDeleteConfirmation(product: Product) {
+    setProductToDelete(product);
+    setDeleteModal(true);
+  }
+
+  function closeDeleteModal() {
+    if (deleting) return; // Prevent closing while deleting
+    setDeleteModal(false);
+    setProductToDelete(null);
   }
 
   useEffect(() => {
@@ -238,7 +299,7 @@ export default function ShopsList() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            console.log("delete", product.id);
+                            openDeleteConfirmation(product);
                           }}
                           className="p-3 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl transform scale-90 group-hover:scale-100 transition-transform duration-300 hover:scale-110"
                         >
@@ -303,7 +364,7 @@ export default function ShopsList() {
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          console.log("delete", product.id);
+                          openDeleteConfirmation(product);
                         }}
                         className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-50 to-red-100 text-red-600 rounded-2xl text-xs font-bold hover:from-red-100 hover:to-red-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 transition-all duration-300"
                       >
@@ -344,6 +405,82 @@ export default function ShopsList() {
         )}
       </div>
 
+      {/* ===== DELETE CONFIRMATION MODAL ===== */}
+      {deleteModal && productToDelete && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+          onClick={closeDeleteModal}
+        >
+          <div
+            className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-red-500 to-red-600 p-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
+                  <AlertTriangle className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Hapus Produk</h3>
+                  <p className="text-red-100 text-sm mt-0.5">
+                    Tindakan ini tidak dapat dibatalkan
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              <p className="text-gray-700 text-sm leading-relaxed">
+                Apakah Anda yakin ingin menghapus produk{" "}
+                <span className="font-bold text-gray-900">
+                  "{productToDelete.name}"
+                </span>
+                ?
+              </p>
+
+              {productToDelete.platforms?.length > 0 && (
+                <div className="p-4 bg-red-50 border border-red-200 rounded-2xl">
+                  <p className="text-xs font-semibold text-red-800">
+                    ⚠️ Produk ini memiliki {productToDelete.platforms.length}{" "}
+                    platform affiliate yang akan ikut terhapus
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="flex gap-3 p-6 bg-gray-50 border-t border-gray-200">
+              <button
+                onClick={closeDeleteModal}
+                disabled={deleting}
+                className="flex-1 px-5 py-3 bg-white border-2 border-gray-300 rounded-2xl text-sm font-bold text-gray-700 hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Batal
+              </button>
+              <button
+                onClick={handleDeleteProduct}
+                disabled={deleting}
+                className="flex-1 px-5 py-3 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl text-sm font-bold text-white hover:from-red-600 hover:to-red-700 hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg shadow-red-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {deleting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Menghapus...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-4 h-4" />
+                    Hapus Produk
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Modals */}
       <ProductFormModal
         open={open}
@@ -358,6 +495,7 @@ export default function ShopsList() {
           setEdit(null);
           fetchProducts(page, search);
         }}
+        userId={userId}
       />
 
       {detailProduct && (

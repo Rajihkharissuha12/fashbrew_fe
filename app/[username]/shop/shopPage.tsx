@@ -424,7 +424,16 @@ export default function ShopPageClient() {
             {sortedProducts.map((product) => (
               <div key={product.id} className="group relative flex">
                 {/* Tombol Aksi */}
-                <div className="absolute top-1.5 md:top-2 right-1.5 md:right-2 flex space-x-1.5 md:space-x-2 z-10">
+                <div className="absolute top-1.5 md:top-2 left-1.5 md:left-2 z-10">
+                  <div className="h-7 w-7 md:h-9 md:w-9 rounded-full bg-white/90 backdrop-blur-sm border border-gray-200 flex items-center justify-center">
+                    <span className="text-[10px] md:text-xs font-medium text-gray-600">
+                      {product.clicks}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Share Button - Pojok Kanan */}
+                <div className="absolute top-1.5 md:top-2 right-1.5 md:right-2 z-10">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();

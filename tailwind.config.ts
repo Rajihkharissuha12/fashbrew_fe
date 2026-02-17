@@ -21,6 +21,8 @@ export default {
       fontFamily: {
         playfair: ["Playfair Display", "serif"],
         inter: ["Inter", "sans-serif"],
+        heading: ["var(--font-playfair)", "serif"], // ← TAMBAHAN untuk portfolio
+        body: ["var(--font-inter)", "sans-serif"], // ← TAMBAHAN untuk portfolio
       },
       colors: {
         border: "hsl(var(--border))",
@@ -102,6 +104,12 @@ export default {
           800: "#9a3412",
           900: "#7c2d12",
         },
+        // ← TAMBAHAN untuk portfolio (pakai existing orange palette)
+        "orange-1": "#C65A2E",
+        "orange-2": "#F2A07B",
+        "orange-3": "#FFF2EC",
+        bg: "#FFFFFF",
+        text: "#111827",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -145,12 +153,18 @@ export default {
             transform: "translateY(0)",
           },
         },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(12px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.6s ease-out",
         "slide-up": "slide-up 0.8s ease-out",
+        // ← TAMBAHAN untuk portfolio
+        "fade-up": "fadeUp 350ms cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
