@@ -23,6 +23,7 @@ type Product = {
   category?: string;
   tags?: string[];
   platforms: any[];
+  clicks?: number;
 };
 
 export default function ShopsList({ userId }: { userId: string }) {
@@ -57,6 +58,7 @@ export default function ShopsList({ userId }: { userId: string }) {
       );
 
       const json = await res.json();
+      console.log("LIST ", json.data);
       setProducts(json.data || []);
       setTotal(json.meta?.total || 0);
       setPage(json.meta?.page || nextPage);
@@ -212,7 +214,7 @@ export default function ShopsList({ userId }: { userId: string }) {
 
         {/* Products Grid - Playful Cards */}
         {!loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6 auto-rows-fr">
             {products.length === 0 ? (
               <div className="col-span-full flex flex-col items-center justify-center py-20">
                 <div className="w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full flex items-center justify-center mb-4 shadow-2xl">
@@ -227,10 +229,10 @@ export default function ShopsList({ userId }: { userId: string }) {
                 <div
                   key={product.id}
                   onClick={() => setDetailProduct(product)}
-                  className="group relative bg-white rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-blue-200"
+                  className="group relative bg-white rounded-2xl md:rounded-3xl overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-blue-200 flex flex-col"
                 >
                   {/* Image Container */}
-                  <div className="relative aspect-square bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-50 overflow-hidden">
+                  <div className="relative aspect-square bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-50 overflow-hidden flex-shrink-0">
                     {product.image ? (
                       <>
                         <img
@@ -243,23 +245,30 @@ export default function ShopsList({ userId }: { userId: string }) {
                       </>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <div className="text-center space-y-3">
-                          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full flex items-center justify-center">
-                            <Package className="w-10 h-10 text-white" />
+                        <div className="text-center space-y-2 md:space-y-3">
+                          <div className="w-12 h-12 md:w-20 md:h-20 mx-auto bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full flex items-center justify-center">
+                            <Package className="w-6 h-6 md:w-10 md:h-10 text-white" />
                           </div>
-                          <p className="text-sm text-gray-400 font-semibold">
+                          <p className="text-xs md:text-sm text-gray-400 font-semibold px-2">
                             Belum ada gambar
                           </p>
                         </div>
                       </div>
                     )}
 
+                    {/* ID Badge - Top Left */}
+                    <div className="absolute top-2 left-2 md:top-4 md:left-4 z-10">
+                      <div className="px-2 py-1 md:px-3 md:py-1.5 rounded-xl md:rounded-2xl text-xs font-mono font-bold bg-gray-900/90 backdrop-blur-md text-white shadow-lg border border-gray-700">
+                        {product.clicks}
+                      </div>
+                    </div>
+
                     {/* Category Badge */}
                     {product.category && (
-                      <div className="absolute top-4 left-4">
+                      <div className="absolute top-10 left-2 md:top-14 md:left-4">
                         <div className="relative">
-                          <div className="absolute inset-0 bg-blue-500 rounded-2xl blur-md opacity-40 animate-pulse" />
-                          <div className="relative px-3 py-1.5 rounded-2xl text-sm font-black bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-xl">
+                          <div className="absolute inset-0 bg-blue-500 rounded-xl md:rounded-2xl blur-md opacity-40 animate-pulse" />
+                          <div className="relative px-2 py-1 md:px-3 md:py-1.5 rounded-xl md:rounded-2xl text-xs md:text-sm font-black bg-gradient-to-r from-blue-500 to-indigo-500 text-white shadow-xl">
                             {product.category}
                           </div>
                         </div>
@@ -268,15 +277,15 @@ export default function ShopsList({ userId }: { userId: string }) {
 
                     {/* Platform Count Badge */}
                     {product.platforms?.length > 0 && (
-                      <div className="absolute top-4 right-4">
-                        <div className="px-3 py-1.5 rounded-2xl text-xs font-bold bg-white/95 backdrop-blur-md text-gray-800 shadow-lg border border-white/50">
-                          🏪 {product.platforms.length} platform
+                      <div className="absolute top-2 right-2 md:top-4 md:right-4">
+                        <div className="px-2 py-1 md:px-3 md:py-1.5 rounded-xl md:rounded-2xl text-xs font-bold bg-white/95 backdrop-blur-md text-gray-800 shadow-lg border border-white/50">
+                          🏪 {product.platforms.length}
                         </div>
                       </div>
                     )}
 
-                    {/* Floating action buttons on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    {/* Floating action buttons on hover - Desktop Only */}
+                    <div className="hidden lg:flex absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <div className="flex gap-2">
                         <button
                           onClick={(e) => {
@@ -313,16 +322,16 @@ export default function ShopsList({ userId }: { userId: string }) {
                     <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-br from-blue-400/20 to-indigo-400/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
                   </div>
 
-                  {/* Content Section */}
-                  <div className="p-5 space-y-4">
+                  {/* Content Section - Flex grow to fill remaining space */}
+                  <div className="flex flex-col flex-grow p-3 md:p-5">
                     {/* Title */}
-                    <h3 className="text-base font-bold text-gray-900 line-clamp-2 leading-relaxed group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
+                    <h3 className="text-sm md:text-base font-bold text-gray-900 line-clamp-2 leading-snug md:leading-relaxed group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-indigo-600 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300 mb-2 md:mb-3">
                       {product.name}
                     </h3>
 
                     {/* Price */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    <div className="flex items-center justify-between mb-2 md:mb-3">
+                      <span className="text-base md:text-xl font-black bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                         {product.price
                           ? `Rp ${product.price.toLocaleString("id-ID")}`
                           : "—"}
@@ -330,46 +339,52 @@ export default function ShopsList({ userId }: { userId: string }) {
                     </div>
 
                     {/* Tags */}
-                    {product.tags && product.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5">
-                        {product.tags.slice(0, 2).map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="inline-flex items-center gap-1 px-3 py-1 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200"
-                          >
-                            <Tag className="w-3 h-3" />
-                            {tag}
-                          </span>
-                        ))}
-                        {product.tags.length > 2 && (
-                          <span className="inline-flex items-center px-3 py-1 rounded-xl text-xs font-bold bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
-                            +{product.tags.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    )}
+                    <div className="mb-auto pb-2 md:pb-3">
+                      {product.tags && product.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1 md:gap-1.5">
+                          {product.tags.slice(0, 2).map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="inline-flex items-center gap-0.5 md:gap-1 px-2 md:px-3 py-0.5 md:py-1 rounded-lg md:rounded-xl text-xs font-bold bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200"
+                            >
+                              <Tag className="w-2.5 h-2.5 md:w-3 md:h-3" />
+                              <span className="hidden sm:inline">{tag}</span>
+                              <span className="sm:hidden">
+                                {tag.slice(0, 8)}
+                                {tag.length > 8 ? "..." : ""}
+                              </span>
+                            </span>
+                          ))}
+                          {product.tags.length > 2 && (
+                            <span className="inline-flex items-center px-2 md:px-3 py-0.5 md:py-1 rounded-lg md:rounded-xl text-xs font-bold bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 border border-blue-200">
+                              +{product.tags.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
 
-                    {/* Mobile Action Buttons */}
-                    <div className="flex gap-3 pt-2">
+                    {/* Action Buttons - Always at bottom */}
+                    <div className="flex gap-2 md:gap-3 mt-auto pt-2 md:pt-3 border-t border-gray-100">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           setEdit(product as ProductWithPlatformsRow);
                           setOpen(true);
                         }}
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-600 rounded-2xl text-xs font-bold hover:from-blue-100 hover:to-blue-200 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300"
+                        className="flex-1 flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 md:py-2.5 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-600 rounded-xl md:rounded-2xl text-xs font-bold hover:from-blue-100 hover:to-blue-200 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20 active:scale-95 transition-all duration-300"
                       >
-                        <Edit2 className="w-4 h-4" />
-                        Edit
+                        <Edit2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                        <span className="hidden sm:inline">Edit</span>
                       </button>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           openDeleteConfirmation(product);
                         }}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-red-50 to-red-100 text-red-600 rounded-2xl text-xs font-bold hover:from-red-100 hover:to-red-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 transition-all duration-300"
+                        className="flex items-center justify-center gap-1 md:gap-2 px-2 md:px-4 py-2 md:py-2.5 bg-gradient-to-r from-red-50 to-red-100 text-red-600 rounded-xl md:rounded-2xl text-xs font-bold hover:from-red-100 hover:to-red-200 hover:scale-105 hover:shadow-lg hover:shadow-red-500/20 active:scale-95 transition-all duration-300"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       </button>
                     </div>
                   </div>
